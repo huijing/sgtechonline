@@ -4,6 +4,7 @@
   "description": "Customisable OpenTok broadcast application for Singapore's online meetups",
   "main": "server.js",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
