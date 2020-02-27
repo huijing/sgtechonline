@@ -6,7 +6,6 @@
 const { apiKey, apiSecret } = require('../config');
 
 /** Imports */
-const R = require('ramda');
 const Promise = require('bluebird');
 const OpenTok = require('opentok');
 
@@ -14,14 +13,13 @@ const OpenTok = require('opentok');
 const OT = Promise.promisifyAll(new OpenTok(apiKey, apiSecret));
 
 /** Private */
-
 const defaultSessionOptions = { mediaMode: 'routed' };
 
 /**
  * Returns options for token creation based on user type
  * @param {String} userType Host, guest, or viewer
  */
-const tokenOptions = (userType) => {
+const tokenOptions = userType => {
   const role = {
     host: 'moderator',
     guest: 'publisher',
@@ -44,7 +42,9 @@ const createSession = options =>
       return Promise.resolve(session);
     };
 
-    OT.createSessionAsync(R.defaultTo(defaultSessionOptions)(options))
+    options = (typeof options === 'undefined') ? defaultSessionOptions : options;
+    
+    OT.createSessionAsync(options)
       .then(setActiveSession)
       .then(resolve)
       .catch(reject);
@@ -70,7 +70,7 @@ const getCredentials = userType =>
       resolve({ apiKey, sessionId: activeSession.sessionId, token });
     } else {
 
-      const addToken = (session) => {
+      const addToken = session => {
         const token = createToken(userType);
         return Promise.resolve({ apiKey, sessionId: session.sessionId, token });
       };

@@ -6,7 +6,7 @@
 const { apiKey, apiSecret } = require('../config');
 
 /** Imports */
-const R = require('ramda');
+const merge = require('deepmerge');
 const Promise = require('bluebird');
 const request = Promise.promisify(require('request'));
 const jwt = require('jsonwebtoken');
@@ -76,8 +76,7 @@ const headers = () => {
  */
 const start = (broadcastSessionId, streams, rtmp) =>
   new Promise((resolve, reject) => {
-
-    if (R.path(['session'], activeBroadcast) === broadcastSessionId) {
+    if (activeBroadcast.session === broadcastSessionId) {
       resolve(activeBroadcast);
     } else {
       const layout = streams > 3 ? bestFitLayout : horizontalLayout;
@@ -87,27 +86,29 @@ const start = (broadcastSessionId, streams, rtmp) =>
        * in order to broadcast to RTMP streams
        */
       const { serverUrl, streamName } = rtmp;
-      const outputs =
-        R.and(!!serverUrl, !!streamName) ?
-          { outputs: { hls: {}, rtmp: { serverUrl, streamName } } } :
-          {};
+      const outputs = (!!serverUrl && !!streamName) ? { 
+        outputs: { 
+          hls: {},
+          rtmp: { serverUrl, streamName } 
+        } 
+      } : {};
 
       const requestConfig = {
         headers: headers(),
         url: broadcastURL,
         json: true,
-        body: R.mergeAll([{ sessionId: broadcastSessionId }, layout, outputs]),
+        body: merge.all([{ sessionId: broadcastSessionId }, layout, outputs]),
       };
 
       // Parse the response from the broadcast api
       const setActiveBroadcast = ({ body }) => {
         const broadcastData = {
-          id: R.path(['id'], body),
+          id: body.id,
           session: broadcastSessionId,
-          rtmp: !!R.path(['broadcastUrls', 'rtmp'], body),
-          url: R.path(['broadcastUrls', 'hls'], body),
-          apiKey: R.path(['partnerId'], body),
-          availableAt: R.path(['createdAt'], body) + broadcastDelay
+          rtmp: !!body.rtmp.broadcastUrls,
+          url: body.hls.broadcastUrls,
+          apiKey: body.partnerId,
+          availableAt: body.createdAt + broadcastDelay
         };
         activeBroadcast = broadcastData;
         return Promise.resolve(broadcastData);
@@ -129,18 +130,19 @@ const start = (broadcastSessionId, streams, rtmp) =>
  */
 const updateLayout = streams =>
   new Promise((resolve, reject) => {
-    const id = R.path(['id'], activeBroadcast);
+    const id = activeBroadcast.id;
 
     if (!id) {
       reject({ error: 'No active broadcast session found' });
     }
 
     const layout = streams > 3 ? bestFitLayout : horizontalLayout;
+
     const requestConfig = {
       headers: headers(),
       url: updateLayoutURL(id),
       json: true,
-      body: R.pick(['type', 'stylesheet'], R.prop('layout', layout)),
+      body: (({ type, stylesheet }) => ({ type, stylesheet }))(layout.layout),
     };
 
     request.putAsync(requestConfig)
@@ -154,7 +156,7 @@ const updateLayout = streams =>
  */
 const end = () =>
   new Promise((resolve, reject) => {
-    const id = R.path(['id'], activeBroadcast);
+    const id = activeBroadcast.id;
     if (!id) {
       return reject({ error: 'No active broadcast session found' });
     }
