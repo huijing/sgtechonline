@@ -27,7 +27,7 @@ const stopBroadcastURL = id => `${broadcastURL}/${id}/stop`;
 const broadcastDelay = 20 * 1000;
 
 /** Let's store the active broadcast */
-let activeBroadcast;
+let activeBroadcast = {};
 
 
 // https://tokbox.com/developer/guides/broadcast/#custom-layouts
@@ -86,12 +86,9 @@ const start = (broadcastSessionId, streams, rtmp) =>
        * in order to broadcast to RTMP streams
        */
       const { serverUrl, streamName } = rtmp;
-      const outputs = (!!serverUrl && !!streamName) ? { 
-        outputs: { 
-          hls: {},
-          rtmp: { serverUrl, streamName } 
-        } 
-      } : {};
+      const outputs = (!!serverUrl && !!streamName) ?
+          { outputs: { hls: {}, rtmp: { serverUrl, streamName } } } :
+          {};
 
       const requestConfig = {
         headers: headers(),
@@ -105,8 +102,8 @@ const start = (broadcastSessionId, streams, rtmp) =>
         const broadcastData = {
           id: body.id,
           session: broadcastSessionId,
-          rtmp: !!body.rtmp.broadcastUrls,
-          url: body.hls.broadcastUrls,
+          rtmp: !!body.broadcastUrls.rtmp,
+          url: body.broadcastUrls.hls,
           apiKey: body.partnerId,
           availableAt: body.createdAt + broadcastDelay
         };
