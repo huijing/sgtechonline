@@ -1,6 +1,3 @@
-/* global analytics http Clipboard */
-/* eslint-disable object-shorthand */
-/* eslint-disable vars-on-top */
 (function () {
 
   /** The state of things */
@@ -148,11 +145,8 @@
    */
   var startBroadcast = function (session) {
 
-    analytics.log('startBroadcast', 'variationAttempt');
-
     var rtmp = validRtmp();
     if (!rtmp) {
-      analytics.log('startBroadcast', 'variationError');
       return;
     }
 
@@ -161,10 +155,8 @@
       .then(function (broadcastData) {
         broadcast = R.merge(broadcast, broadcastData);
         updateStatus(session, 'active');
-        analytics.log('startBroadcast', 'variationSuccess');
       }).catch(function (error) {
         console.log(error);
-        analytics.log('startBroadcast', 'variationError');
       });
 
   };
@@ -177,11 +169,9 @@
     http.post('/broadcast/end')
       .then(function () {
         updateStatus(session, 'ended');
-        analytics.log('endBroadcast', 'variationSuccess');
       })
       .catch(function (error) {
         console.log(error);
-        analytics.log('endBroadcast', 'variationError');
       });
   };
 
@@ -308,14 +298,8 @@
     session.connect(credentials.token, function (error) {
       if (error) {
         console.log(error);
-        analytics.init(session);
-        analytics.log('initialize', 'variationAttempt');
-        analytics.log('initialize', 'variationError');
       } else {
         publishAndSubscribe(session, publisher);
-        analytics.init(session);
-        analytics.log('initialize', 'variationAttempt');
-        analytics.log('initialize', 'variationSuccess');
       }
     });
   };

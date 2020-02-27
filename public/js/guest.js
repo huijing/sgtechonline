@@ -1,5 +1,3 @@
-/* global analytics */
-/* eslint-disable object-shorthand */
 (function () {
 
   /**
@@ -117,14 +115,8 @@
     session.connect(credentials.token, function (error) {
       if (error) {
         console.log(error);
-        analytics.init(session);
-        analytics.log('initialize', 'variationAttempt');
-        analytics.log('initialize', 'variationError');
       } else {
         publishAndSubscribe(session, publisher);
-        analytics.init(session);
-        analytics.log('initialize', 'variationAttempt');
-        analytics.log('initialize', 'variationSuccess');
       }
     });
   };
