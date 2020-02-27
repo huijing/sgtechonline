@@ -60,8 +60,7 @@
     var buildQueryString = function (query, key) {
       return [query, key, '=', params[key], '&'].join('');
     };
-    var queryString = R.reduce(buildQueryString, '?', R.keys(params)).slice(0, -1);
-
+    var queryString = Object.keys(params).reduce(buildQueryString, '?').slice(0, -1);
     return [window.location.host, '/broadcast', queryString].join('');
   };
 
@@ -71,7 +70,7 @@
   var updateStatus = function (session, status) {
 
     var startStopButton = document.getElementById('startStop');
-    var playerUrl = getBroadcastUrl(R.pick(['url', 'availableAt'], broadcast));
+    var playerUrl = getBroadcastUrl((({ url, availableAt }) => ({ url, availableAt }))(broadcast));
     var displayUrl = document.getElementById('broadcastURL');
     var rtmpActive = document.getElementById('rtmpActive');
 
@@ -153,7 +152,7 @@
     hideRtmpInput();
     http.post('/broadcast/start', { sessionId: session.sessionId, streams: broadcast.streams, rtmp: rtmp })
       .then(function (broadcastData) {
-        broadcast = R.merge(broadcast, broadcastData);
+        broadcast = {...broadcast, ...broadcastData};
         updateStatus(session, 'active');
       }).catch(function (error) {
         console.log(error);

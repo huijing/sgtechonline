@@ -75,7 +75,6 @@ body {
     bottom: 20px;
     margin: 0 auto;
     opacity: 1;
-    font-family: 'Poiret One', cursive;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.5);
     width: 125px;
@@ -164,7 +163,6 @@ body {
 }
 
 .broadcast-controls-container .rtmp-container span {
-    font-family: "Poiret One";
     font-style: italic;
     color: #0099cc;
     font-weight: 600;
@@ -220,7 +218,6 @@ body {
 
 .copy-link {
     position: relative;
-    font-family: 'Poiret One', cursive;
     color: #59c9e3;
     width: 200px;
     margin: 10px auto;
@@ -271,7 +268,6 @@ body {
     color: #59c9e3;
     background-color: #fff;
     border-radius: 4px;
-    font-family: 'Poiret One', cursive;
     width: 250px;
     height: 40px;
     top: -45px;
@@ -293,7 +289,6 @@ body {
 }
 
 .btn-broadcast {
-    font-family: 'Poiret One', cursive;
     background-color: #0099cc;
     box-shadow: 0 0 0 1px #0099cc;
     color: #fff !important;
