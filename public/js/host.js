@@ -267,8 +267,8 @@
     var el = document.createElement('div');
     var controls = [
       '<div class="publisher-controls-container">',
-      '<div id="publishVideo" class="control video-control"></div>',
-      '<div id="publishAudio" class="control audio-control"></div>',
+      '<div id="publishVideo" class="control video-control" tabindex="0"></div>',
+      '<div id="publishAudio" class="control audio-control" tabindex="0"></div>',
       '</div>',
     ].join('\n');
     el.innerHTML = controls;
