@@ -2,43 +2,44 @@
 <html lang="en">
 
 <head>
-    <%- include ('../partials/common-head') %>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js" type="text/javascript" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
-        <script src="js/util/http.js" type="text/javascript"></script>
-        <script src="js/host.js" type="text/javascript"></script>
+  <%- include ('../partials/common-head') %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <script src="js/util/http.js"></script>
+  <script src="js/host.js"></script>
 </head>
 
 <body>
-    <div id="credentials" style="display:none;" data="<%= credentials %>"></div>
-    <div id="main" class="main-container">
-        <div id="videoContainer" class="video-container">
-            <div id="hostDivider" class="hidden"></div>
-        </div>
-    </div>
-    <div class="broadcast-controls-container">
-        <div class="rtmp-container">
-            <span id="rtmpLabel">Want to stream to YouTube Live or Facebook Live? Add your RTMP Server URL and Stream Name:</span>
-            <span class="hidden error" id="rtmpError">The entered RTMP server and/or stream name are not valid. Please check the url and try again.</span>
-            <span id="rtmpActive" class="hidden active">Your RTMP stream is active!</span>
-            <div id="rtmpInputContainer" class="input-container" >
-                <input id="rtmpServer" type="url" placeholder="rtmp://myrtmpserver/mybroadcastapp">
-                <input id="rtmpStream" type="text" placeholder="myStreamName">
-            </div>
-        </div>
-        <button id="startStop" class="btn-broadcast hidden">Start Broadcast</button>
-        <div id="urlContainer" class="url-container hidden">
-            <div id="broadcastURL" class="opacity-0 no-show"></div>
-            <div id="copyURL"class="copy-link" data-clipboard-target="#broadcastURL">
-                <span>Get sharable HLS link</span>
-            </div>
-            <div id="copyNotice" class="tooltip copy opacity-0">
-                <span>Link copied to clipboard!</span>
-                <span class="triangle-down">▼</span>
-            </div>
-        </div>
-    </div>
+  <%- include ('../partials/branding') %>
 
+  <main>
+    <%- include ('../partials/video-player') %>
+  </main>
+
+  <aside>
+    <div class="rtmp-container">
+      <p id="rtmpLabel">To stream to YouTube or Facebook, add your RTMP Server URL and Stream Name:</p>
+      <p id="rtmpError" class="hidden error">The entered RTMP server and/or stream name are not valid. Please check the url and try again.</p>
+      <p id="rtmpActive" class="hidden active">Your RTMP stream is active!</p>
+      <div id="rtmpInputContainer" class="input-container">
+        <input id="rtmpServer" type="url" placeholder="rtmp://myrtmpserver/mybroadcastapp">
+        <input id="rtmpStream" placeholder="myStreamName">
+      </div>
+    </div>
+    <button id="startStop" class="btn-broadcast hidden">Start Broadcast</button>
+    <div id="urlContainer" class="url-container hidden">
+      <div id="broadcastURL" class="opacity-0 no-show"></div>
+      <div id="copyURL"class="copy-link" data-clipboard-target="#broadcastURL">
+        <span>Get shareable HLS link</span>
+      </div>
+      <div id="copyNotice" class="tooltip copy opacity-0">
+        <span>Link copied to clipboard!</span>
+        <span class="triangle-down">▼</span>
+      </div>
+    </div>
+    <%- include ('../partials/live-chat') %>
+  </aside>
+  <div id="credentials" style="display:none;" data="<%= credentials %>"></div>
 </body>
 
 </html>
