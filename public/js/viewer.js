@@ -1,6 +1,5 @@
 /* eslint-disable object-shorthand */
 (function () {
-
   /**
    * Options for adding OpenTok publisher and subscriber video elements
    */
@@ -48,24 +47,34 @@
    * Update the banner based on the status of the broadcast (active or ended)
    */
   var updateBanner = function (status) {
-
     var banner = document.getElementById('banner');
     var bannerText = document.getElementById('bannerText');
 
     if (status === 'active') {
       banner.classList.add('hidden');
     } else if (status === 'ended') {
-      bannerText.classList.add('red');
+      bannerText.classList.add('ended');
       bannerText.innerHTML = 'The Broadcast is Over';
       banner.classList.remove('hidden');
     }
   };
 
   /**
+   * Receive a message and append it to the message history
+   */
+  var updateChat = function (content, className) {
+    var msgHistory = document.getElementById('chatHistory');
+    var msg = document.createElement('p');
+    msg.textContent = content;
+    msg.className = className;
+    msgHistory.appendChild(msg);
+  };
+
+
+  /**
    * Listen for events on the OpenTok session
    */
   var setEventListeners = function (session) {
-
     var streams = [];
     var subscribers = [];
     var broadcastActive = false;
@@ -91,7 +100,6 @@
 
     /** Listen for a broadcast status update from the host */
     session.on('signal:broadcast', function (event) {
-
       var status = event.data;
       broadcastActive = status === 'active';
 
@@ -106,6 +114,28 @@
       }
       updateBanner(status);
     });
+
+    session.on('signal:msg', function signalCallback(event) {
+      var content = event.data;
+      var className = event.from.connectionId === session.connection.connectionId ? 'self' : 'others';
+      updateChat(content, className);
+    });
+
+    var chat = document.querySelector('form');
+    var msgTxt = document.querySelector('input');
+    chat.addEventListener('submit', function(event) {
+      event.preventDefault();
+      session.signal({
+        type: 'msg',
+        data: msgTxt.value
+      }, function signalCallback(error) {
+        if (error) {
+          console.error('Error sending signal:', error.name, error.message);
+        } else {
+          msgTxt.value = '';
+        }
+      })
+    }, false);
   };
 
   var init = function () {
