@@ -49,7 +49,6 @@
     });
   };
 
-
   /**
    * Construct the url for viewers to view the broadcast stream
    * @param {Object} params
@@ -68,7 +67,6 @@
    * Set the state of the broadcast and update the UI
    */
   var updateStatus = function (session, status) {
-
     var startStopButton = document.getElementById('startStop');
     var playerUrl = getBroadcastUrl((({ url, availableAt }) => ({ url, availableAt }))(broadcast));
     var displayUrl = document.getElementById('broadcastURL');
@@ -96,11 +94,11 @@
   };
 
   // Let the user know that the url has been copied to the clipboard
-  var showCopiedNotice = function () {
+  var urlCopied = function () {
     var notice = document.getElementById('copyNotice');
-    notice.classList.remove('opacity-0');
+    notice.classList.remove('invisible');
     setTimeout(function () {
-      notice.classList.add('opacity-0');
+      notice.classList.add('invisible');
     }, 1500);
   };
 
@@ -150,6 +148,7 @@
     }
 
     hideRtmpInput();
+
     http.post('/broadcast/start', { sessionId: session.sessionId, streams: broadcast.streams, rtmp: rtmp })
       .then(function (broadcastData) {
         broadcast = {...broadcast, ...broadcastData};
@@ -166,12 +165,12 @@
    */
   var endBroadcast = function (session) {
     http.post('/broadcast/end')
-      .then(function () {
-        updateStatus(session, 'ended');
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    .then(function () {
+      updateStatus(session, 'ended');
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   };
 
   /**
@@ -200,8 +199,8 @@
 
   var updateBroadcastLayout = function () {
     http.post('/broadcast/layout', { streams: broadcast.streams })
-      .then(function (result) { console.log(result); })
-      .catch(function (error) { console.log(error); });
+    .then(function (result) { console.log(result); })
+    .catch(function (error) { console.log(error); });
   };
 
   var setEventListeners = function (session, publisher) {
@@ -249,7 +248,7 @@
     });
 
     document.getElementById('copyURL').addEventListener('click', function () {
-      showCopiedNotice();
+      urlCopied();
     });
 
     document.getElementById('publishVideo').addEventListener('click', function () {
@@ -288,7 +287,7 @@
   };
 
   var init = function () {
-    var clipboard = new Clipboard('#copyURL'); // eslint-disable-line no-unused-vars
+    var clipboard = new ClipboardJS('#copyURL');
     var credentials = getCredentials();
     var props = { connectionEventsSuppressed: true };
     var session = OT.initSession(credentials.apiKey, credentials.sessionId, props);

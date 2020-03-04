@@ -1,0 +1,12 @@
+$accent-colour: mediumslateblue;
+$warning-colour: crimson;
+$disabled-colour: gray;
+$light-bg: rgba(255, 255, 255, 0.7);
+
+@function text-color($color) {
+  @if (lightness($color) > 50) {
+    @return #000000; // Lighter backgorund, return dark color
+  } @else {
+    @return #ffffff; // Darker background, return light color
+  }
+}

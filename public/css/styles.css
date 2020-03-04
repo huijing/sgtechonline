@@ -29,7 +29,7 @@ main {
 
 aside {
   grid-area: aside;
-  padding: 1em;
+  padding: 0.5em 1em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -47,14 +47,14 @@ input {
   padding: 0.5em; }
 
 button {
-  background-color: #0099cc;
-  color: #fff;
+  background-color: mediumslateblue;
+  color: #000000;
   cursor: pointer;
   border: 0;
   border-radius: 2px;
-  -webkit-transition: all .5s ease-out;
-  -o-transition: all .5s ease-out;
-  transition: all .5s ease-out;
+  -webkit-transition: color .3s ease, background-color .3s ease;
+  -o-transition: color .3s ease, background-color .3s ease;
+  transition: color .3s ease, background-color .3s ease;
   font-size: inherit;
   padding: 0.5em 1em; }
 
@@ -69,7 +69,7 @@ button {
   margin: auto; }
 
 .banner .ended {
-  color: red; }
+  color: crimson; }
 
 .video-container {
   grid-row: 1;
@@ -131,7 +131,6 @@ button {
   margin: 0 auto;
   opacity: 1;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
   width: 125px;
   border-radius: 20px; }
 
@@ -177,106 +176,64 @@ button {
   background-image: url("../images/no-mic.svg"); }
 
 .rtmp-container p.error {
-  color: red; }
+  color: crimson; }
 
 .rtmp-container .input-container input {
   width: calc(100% - 2em);
   margin-bottom: 1em; }
 
-.rtmp-container input::-webkit-input-placeholder {
-  color: lightgrey; }
-
 .url-container {
-  position: relative; }
-
-.copy-link {
   position: relative;
-  cursor: pointer; }
-
-.tooltip {
-  position: absolute; }
-
-.tooltip.copy {
-  -webkit-transition: all .5s ease-out;
-  -o-transition: all .5s ease-out;
-  transition: all .5s ease-out;
-  -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.75);
-          box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.75); }
-
-.tooltip.copy::before {
-  content: '\2714';
-  height: 16px;
-  width: 16px;
-  font-size: 12px;
-  line-height: 16px;
-  margin-right: 10px;
-  border: 1px solid #59c9e3;
-  border-radius: 50%; }
-
-.url-container .tooltip.copy {
-  position: absolute;
-  background-color: #fff;
-  border-radius: 4px;
-  width: 250px;
-  height: 40px;
-  top: -45px;
-  right: 0px;
-  left: 0px;
-  margin: 0 auto;
+  text-align: center;
+  margin: 1em 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center; }
 
-.url-container .tooltip.copy .triangle-down {
-  color: #fff;
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4), 0 1px 0px rgba(0, 0, 0, 0.5);
+.copy-link {
+  cursor: pointer; }
+
+.copy-txt {
   position: absolute;
-  right: 0;
-  left: 0;
-  bottom: -16px; }
-
-.btn-broadcast {
-  -ms-flex-item-align: center;
-      align-self: center; }
-
-.btn-broadcast:hover {
-  text-decoration: none;
-  background-color: #007ba3;
-  -webkit-box-shadow: 0 0 0 2px #0099cc;
-          box-shadow: 0 0 0 2px #0099cc; }
-
-.btn-broadcast.active {
-  background-color: #E04E4E;
-  -webkit-box-shadow: 0 0 0 1px #E04E4E;
-          box-shadow: 0 0 0 1px #E04E4E; }
-
-.btn-broadcast.active:hover {
-  background-color: #692B2B;
-  -webkit-box-shadow: 0 0 0 2px #E04E4E;
-          box-shadow: 0 0 0 2px #E04E4E; }
-
-.btn-broadcast:disabled {
-  background-color: darkgrey;
-  -webkit-box-shadow: 0 0 0 2px darkgrey;
-          box-shadow: 0 0 0 2px darkgrey;
-  cursor: default; }
+  bottom: -2.25em;
+  border-radius: 4px;
+  border: 1px solid mediumslateblue;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 0.25em 0.5em; }
 
 .hidden {
   display: none !important; }
 
-.opacity-0 {
+.invisible {
   opacity: 0;
+  position: absolute;
   z-index: -1; }
 
-.no-show {
-  height: 0;
-  width: 0; }
+.btn-broadcast {
+  -ms-flex-item-align: center;
+      align-self: center;
+  margin-bottom: 1em; }
+
+.btn-broadcast:hover {
+  text-decoration: none;
+  background-color: #8f7ff1; }
+
+.btn-broadcast.active {
+  background-color: crimson; }
+
+.btn-broadcast.active:hover {
+  background-color: #ed365b; }
+
+.btn-broadcast:disabled {
+  background-color: gray;
+  cursor: default; }
 
 .chat-container {
   -webkit-box-flex: 1;

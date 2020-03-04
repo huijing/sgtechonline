@@ -1,3 +1,5 @@
+@import 'settings';
+
 html {
   box-sizing: border-box;
   height: 100%;
@@ -33,7 +35,7 @@ main {
 
 aside {
   grid-area: aside;
-  padding: 1em;
+  padding: 0.5em 1em;
   display: flex;
   flex-direction: column;
 }
@@ -49,12 +51,12 @@ input {
 }
 
 button {
-  background-color: #0099cc;
-  color: #fff;
+  background-color: $accent-colour;
+  color: text-color($accent-colour);
   cursor: pointer;
   border: 0;
   border-radius: 2px;
-  transition: all .5s ease-out;
+  transition: color .3s ease, background-color .3s ease;
   font-size: inherit;
   padding: 0.5em 1em;
 }
@@ -70,7 +72,7 @@ button {
 }
 
 .banner .ended {
-  color: red;
+  color: $warning-colour;
 }
 
 .video-container {
@@ -127,7 +129,6 @@ button {
   margin: 0 auto;
   opacity: 1;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
   width: 125px;
   border-radius: 20px;
 }
@@ -174,7 +175,7 @@ button {
 }
 
 .rtmp-container p.error {
-  color: red;
+  color: $warning-colour;
 }
 
 .rtmp-container .input-container input {
@@ -182,101 +183,59 @@ button {
   margin-bottom: 1em;
 }
 
-.rtmp-container input::-webkit-input-placeholder {
-  color: lightgrey;
-}
-
 .url-container {
   position: relative;
-}
-
-.copy-link {
-  position: relative;
-  cursor: pointer;
-}
-
-.tooltip {
-  position: absolute;
-}
-
-.tooltip.copy {
-  transition: all .5s ease-out;
-  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.75);
-}
-
-.tooltip.copy::before {
-  content: '\2714';
-  height: 16px;
-  width: 16px;
-  font-size: 12px;
-  line-height: 16px;
-  margin-right: 10px;
-  border: 1px solid #59c9e3;
-  border-radius: 50%;
-}
-
-.url-container .tooltip.copy {
-  position: absolute;
-  background-color: #fff;
-  border-radius: 4px;
-  width: 250px;
-  height: 40px;
-  top: -45px;
-  right: 0px;
-  left: 0px;
-  margin: 0 auto;
+  text-align: center;
+  margin: 1em 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
-.url-container .tooltip.copy .triangle-down {
-  color: #fff;
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.4), 0 1px 0px rgba(0, 0, 0, 0.5);
+.copy-link {
+  cursor: pointer;
+}
+
+.copy-txt {
   position: absolute;
-  right: 0;
-  left: 0;
-  bottom: -16px;
-}
-
-.btn-broadcast {
-  align-self: center;
-}
-
-.btn-broadcast:hover {
-  text-decoration: none;
-  background-color: #007ba3;
-  box-shadow: 0 0 0 2px #0099cc
-}
-
-.btn-broadcast.active {
-  background-color: #E04E4E;
-  box-shadow: 0 0 0 1px #E04E4E;
-}
-
-.btn-broadcast.active:hover {
-  background-color: #692B2B;
-  box-shadow: 0 0 0 2px #E04E4E
-}
-
-.btn-broadcast:disabled {
-  background-color: darkgrey;
-  box-shadow: 0 0 0 2px darkgrey;
-  cursor: default;
+  bottom: -2.25em;
+  border-radius: 4px;
+  border: 1px solid $accent-colour;
+  background-color: $light-bg;
+  padding: 0.25em 0.5em;
 }
 
 .hidden {
   display: none !important;
 }
 
-.opacity-0 {
+.invisible {
   opacity: 0;
+  position: absolute;
   z-index: -1;
 }
 
-.no-show {
-  height: 0;
-  width: 0;
+.btn-broadcast {
+  align-self: center;
+  margin-bottom: 1em;
+}
+
+.btn-broadcast:hover {
+  text-decoration: none;
+  background-color: lighten($accent-colour, 5%);
+}
+
+.btn-broadcast.active {
+  background-color: $warning-colour;
+}
+
+.btn-broadcast.active:hover {
+  background-color: lighten($warning-colour, 10%);
+}
+
+.btn-broadcast:disabled {
+  background-color: $disabled-colour;
+  cursor: default;
 }
 
 .chat-container {
