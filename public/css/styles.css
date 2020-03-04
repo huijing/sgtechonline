@@ -175,6 +175,9 @@ button {
 .publisher-controls-container .audio-control.disabled {
   background-image: url("../images/no-mic.svg"); }
 
+.rtmp-container p {
+  font-style: italic; }
+
 .rtmp-container p.error {
   color: crimson; }
 

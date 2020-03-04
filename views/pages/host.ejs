@@ -17,7 +17,7 @@
 
   <aside>
     <div class="rtmp-container">
-      <p id="rtmpLabel">Optional: to stream to YouTube or Facebook, add your RTMP Server URL and Stream Name:</p>
+      <p id="rtmpLabel">Optional: to stream to YouTube or Facebook, add your RTMP server URL and stream name below:</p>
       <p id="rtmpError" class="hidden error">The entered RTMP server and/or stream name are not valid. Please check the url and try again.</p>
       <p id="rtmpActive" class="hidden active">Your RTMP stream is active!</p>
       <div id="rtmpInputContainer" class="input-container">
@@ -25,7 +25,9 @@
         <input id="rtmpStream" placeholder="myStreamName">
       </div>
     </div>
+
     <button id="startStop" class="btn-broadcast hidden">Start Broadcast</button>
+
     <div id="urlContainer" class="url-container hidden">
       <div id="broadcastURL" class="invisible"></div>
       <button id="copyURL" class="copy-link" data-clipboard-target="#broadcastURL">Get shareable HLS link</button>
@@ -33,8 +35,10 @@
         <span>Link copied!</span>
       </div>
     </div>
+
     <%- include ('../partials/live-chat') %>
   </aside>
+
   <div id="credentials" style="display:none;" data="<%= credentials %>"></div>
 </body>
 

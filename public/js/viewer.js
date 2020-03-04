@@ -70,7 +70,6 @@
     msgHistory.appendChild(msg);
   };
 
-
   /**
    * Listen for events on the OpenTok session
    */
@@ -121,8 +120,8 @@
       updateChat(content, className);
     });
 
-    var chat = document.querySelector('form');
-    var msgTxt = document.querySelector('input');
+    var chat = document.getElementById('chatForm');
+    var msgTxt = document.getElementById('chatInput');
     chat.addEventListener('submit', function(event) {
       event.preventDefault();
       session.signal({

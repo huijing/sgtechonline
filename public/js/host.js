@@ -85,7 +85,7 @@
       }
     } else {
       startStopButton.classList.remove('active');
-      startStopButton.innerHTML = 'Broadcast Over';
+      startStopButton.innerHTML = 'Broadcast ended';
       startStopButton.disabled = true;
       rtmpActive.classList.add('hidden');
     }
@@ -150,13 +150,12 @@
     hideRtmpInput();
 
     http.post('/broadcast/start', { sessionId: session.sessionId, streams: broadcast.streams, rtmp: rtmp })
-      .then(function (broadcastData) {
-        broadcast = {...broadcast, ...broadcastData};
-        updateStatus(session, 'active');
-      }).catch(function (error) {
-        console.log(error);
-      });
-
+    .then(function (broadcastData) {
+      broadcast = {...broadcast, ...broadcastData};
+      updateStatus(session, 'active');
+    }).catch(function (error) {
+      console.log(error);
+    });
   };
 
   /**
@@ -203,8 +202,18 @@
     .catch(function (error) { console.log(error); });
   };
 
-  var setEventListeners = function (session, publisher) {
+  /**
+   * Receive a message and append it to the message history
+   */
+  var updateChat = function (content, className) {
+    var msgHistory = document.getElementById('chatHistory');
+    var msg = document.createElement('p');
+    msg.textContent = content;
+    msg.className = className;
+    msgHistory.appendChild(msg);
+  };
 
+  var setEventListeners = function (session, publisher) {
     // Add click handler to the start/stop button
     var startStopButton = document.getElementById('startStop');
     startStopButton.classList.remove('hidden');
@@ -247,6 +256,28 @@
       }
     });
 
+    session.on('signal:msg', function signalCallback(event) {
+      var content = event.data;
+      var className = event.from.connectionId === session.connection.connectionId ? 'self' : 'others';
+      updateChat(content, className);
+    });
+  
+    var chat = document.getElementById('chatForm');
+    var msgTxt = document.getElementById('chatInput');
+    chat.addEventListener('submit', function(event) {
+      event.preventDefault();
+      session.signal({
+        type: 'msg',
+        data: msgTxt.value
+      }, function signalCallback(error) {
+        if (error) {
+          console.error('Error sending signal:', error.name, error.message);
+        } else {
+          msgTxt.value = '';
+        }
+      })
+    }, false);
+
     document.getElementById('copyURL').addEventListener('click', function () {
       urlCopied();
     });
@@ -258,7 +289,6 @@
     document.getElementById('publishAudio').addEventListener('click', function () {
       toggleMedia(publisher, this);
     });
-
   };
 
   var addPublisherControls = function (publisher) {
