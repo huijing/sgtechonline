@@ -1,14 +1,9 @@
-/* eslint-disable object-shorthand */
 (function () {
-
   var http = {
     post: function (url, data) {
-
       var requestHeaders = {
-        /* eslint-disable quote-props */
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-          /* eslint-enable quote-props */
       };
 
       var parseJSON = function (response) {
@@ -33,7 +28,5 @@
       });
     }
   };
-
   window.http = http;
-
 }());
