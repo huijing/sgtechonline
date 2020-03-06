@@ -27,7 +27,11 @@
    * Create an OpenTok publisher object
    */
   var initPublisher = function () {
-    var properties = Object.assign({ name: 'Host', insertMode: 'before' }, insertOptions);
+    var properties = Object.assign({ 
+      name: 'Host',
+      style: { nameDisplayMode: "on" },
+      insertMode: 'before'
+    }, insertOptions);
     return OT.initPublisher('hostDivider', properties);
   };
 
@@ -93,7 +97,9 @@
     signal(session, broadcast.status);
   };
 
-  // Let the user know that the url has been copied to the clipboard
+  /**
+   * Let the user know that the url has been copied to the clipboard
+   */
   var urlCopied = function () {
     var notice = document.getElementById('copyNotice');
     notice.classList.remove('invisible');
@@ -141,7 +147,6 @@
    * @param {String} sessionId
    */
   var startBroadcast = function (session) {
-
     var rtmp = validRtmp();
     if (!rtmp) {
       return;
@@ -176,7 +181,10 @@
    * Subscribe to a stream
    */
   var subscribe = function (session, stream) {
-    var properties = Object.assign({ name: 'Guest', insertMode: 'after' }, insertOptions);
+    var properties = Object.assign({ 
+      name: 'Guest',
+      insertMode: 'after'
+    }, insertOptions);
     session.subscribe(stream, 'hostDivider', properties, function (error) {
       if (error) {
         console.log(error);
@@ -214,7 +222,7 @@
   };
 
   var setEventListeners = function (session, publisher) {
-    // Add click handler to the start/stop button
+    /** Add click handler to the start/stop button */
     var startStopButton = document.getElementById('startStop');
     startStopButton.classList.remove('hidden');
     startStopButton.addEventListener('click', function () {
@@ -225,7 +233,7 @@
       }
     });
 
-    // Subscribe to new streams as they're published
+    /** Subscribe to new streams as they're published */
     session.on('streamCreated', function (event) {
       var currentStreams = broadcast.streams;
       subscribe(session, event.stream);
@@ -249,13 +257,14 @@
       }
     });
 
-    // Signal the status of the broadcast when requested
+    /** Signal the status of the broadcast when requested */
     session.on('signal:broadcast', function (event) {
       if (event.data === 'status') {
         signal(session, broadcast.status, event.from);
       }
     });
 
+    /** Listen for msg type signal events and update chat log display */
     session.on('signal:msg', function signalCallback(event) {
       var content = event.data;
       var className = event.from.connectionId === session.connection.connectionId ? 'self' : 'others';
@@ -333,5 +342,4 @@
   };
 
   document.addEventListener('DOMContentLoaded', init);
-
 }());

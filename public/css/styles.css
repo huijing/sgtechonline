@@ -19,17 +19,20 @@ header {
   grid-area: header;
   justify-self: center;
   padding: 1em;
-  text-align: center; }
+  text-align: center;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2); }
 
 main {
   grid-area: video;
   display: grid;
   grid-template-column: auto;
-  grid-template-row: auto; }
+  grid-template-row: auto;
+  -webkit-box-shadow: inset -2px -1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: inset -2px -1px 2px rgba(0, 0, 0, 0.2); }
 
 aside {
   grid-area: aside;
-  padding: 0.5em 1em;
+  padding: 1em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -44,7 +47,9 @@ p {
 
 input {
   font-size: 85%;
-  padding: 0.5em; }
+  padding: 0.5em;
+  border: 1px solid mediumslateblue;
+  border-radius: 2px; }
 
 button {
   background-color: mediumslateblue;
@@ -66,7 +71,12 @@ button {
   display: flex; }
 
 .banner .text {
-  margin: auto; }
+  margin: auto;
+  font-size: 2em;
+  font-style: italic;
+  color: mediumslateblue;
+  border: 1px solid mediumslateblue;
+  padding: 0.5em 1em; }
 
 .banner .ended {
   color: crimson; }
@@ -254,3 +264,15 @@ button {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1; }
+
+.chat-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
+.chat-container input {
+  width: 100%;
+  border-radius: 2px 0 0 2px; }
+
+.chat-container button {
+  border-radius: 0 2px 2px 0; }

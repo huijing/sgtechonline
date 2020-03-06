@@ -24,6 +24,7 @@ header {
   justify-self: center;
   padding: 1em;
   text-align: center;
+  border-bottom: 2px solid $dark-bg;
 }
 
 main {
@@ -31,11 +32,12 @@ main {
   display: grid;
   grid-template-column: auto;
   grid-template-row: auto;
+  box-shadow: inset -2px -1px 2px $dark-bg;
 }
 
 aside {
   grid-area: aside;
-  padding: 0.5em 1em;
+  padding: 1em;
   display: flex;
   flex-direction: column;
 }
@@ -48,6 +50,8 @@ p {
 input {
   font-size: 85%;
   padding: 0.5em;
+  border: 1px solid $accent-colour;
+  border-radius: 2px;
 }
 
 button {
@@ -69,6 +73,11 @@ button {
 
 .banner .text {
   margin: auto;
+  font-size: 2em;
+  font-style: italic;
+  color: $accent-colour;
+  border: 1px solid $accent-colour;
+  padding: 0.5em 1em;
 }
 
 .banner .ended {
@@ -250,4 +259,17 @@ button {
 
 .chat-log {
   flex: 1;
+}
+
+.chat-container form {
+  display: flex;
+}
+
+.chat-container input {
+  width: 100%;
+  border-radius: 2px 0 0 2px;
+}
+
+.chat-container button {
+  border-radius: 0 2px 2px 0;
 }

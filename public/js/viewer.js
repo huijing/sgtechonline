@@ -1,4 +1,3 @@
-/* eslint-disable object-shorthand */
 (function () {
   /**
    * Options for adding OpenTok publisher and subscriber video elements
@@ -22,12 +21,15 @@
 
   /**
    * Subscribe to a stream
-   * @returns {Object} A subsriber object
+   * @returns {Object} A subscriber object
    */
   var subscribe = function (session, stream) {
     var name = stream.name;
     var insertMode = name === 'Host' ? 'before' : 'after';
-    var properties = Object.assign({ name: name, insertMode: insertMode }, insertOptions);
+    var properties = Object.assign({ 
+      name: name,
+      insertMode: insertMode 
+    }, insertOptions);
     return session.subscribe(stream, 'hostDivider', properties, function (error) {
       if (error) {
         console.log(error);
@@ -54,7 +56,7 @@
       banner.classList.add('hidden');
     } else if (status === 'ended') {
       bannerText.classList.add('ended');
-      bannerText.innerHTML = 'The Broadcast is Over';
+      bannerText.innerHTML = 'The broadcast has ended.';
       banner.classList.remove('hidden');
     }
   };
@@ -114,6 +116,7 @@
       updateBanner(status);
     });
 
+    /** Listen for msg type signal events and update chat log display */
     session.on('signal:msg', function signalCallback(event) {
       var content = event.data;
       var className = event.from.connectionId === session.connection.connectionId ? 'self' : 'others';
@@ -153,5 +156,4 @@
   };
 
   document.addEventListener('DOMContentLoaded', init);
-
 }());

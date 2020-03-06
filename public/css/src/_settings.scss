@@ -2,6 +2,7 @@ $accent-colour: mediumslateblue;
 $warning-colour: crimson;
 $disabled-colour: gray;
 $light-bg: rgba(255, 255, 255, 0.7);
+$dark-bg: rgba(0, 0, 0, 0.2);
 
 @function text-color($color) {
   @if (lightness($color) > 50) {

@@ -24,7 +24,10 @@
    * Create an OpenTok publisher object
    */
   var initPublisher = function () {
-    var properties = Object.assign({ name: 'Guest', insertMode: 'after' }, insertOptions);
+    var properties = Object.assign({ 
+      name: 'Guest',
+      insertMode: 'after'
+    }, insertOptions);
     return OT.initPublisher('hostDivider', properties);
   };
 
@@ -34,7 +37,10 @@
   var subscribe = function (session, stream) {
     var name = stream.name;
     var insertMode = name === 'Host' ? 'before' : 'after';
-    var properties = Object.assign({ name: name, insertMode: insertMode }, insertOptions);
+    var properties = Object.assign({ 
+      name: name,
+      insertMode: insertMode
+    }, insertOptions);
     session.subscribe(stream, 'hostDivider', properties, function (error) {
       if (error) {
         console.log(error);
@@ -68,13 +74,23 @@
   };
 
   /**
+   * Receive a message and append it to the message history
+   */
+  var updateChat = function (content, className) {
+    var msgHistory = document.getElementById('chatHistory');
+    var msg = document.createElement('p');
+    msg.textContent = content;
+    msg.className = className;
+    msgHistory.appendChild(msg);
+  };
+
+  /**
    * Start publishing our audio and video to the session. Also, start
    * subscribing to other streams as they are published.
    * @param {Object} session The OpenTok session
    * @param {Object} publisher The OpenTok publisher object
    */
   var publishAndSubscribe = function (session, publisher) {
-
     var streams = 1;
 
     session.publish(publisher);
@@ -96,6 +112,29 @@
       }
     });
 
+    /** Listen for msg type signal events and update chat log display */
+    session.on('signal:msg', function signalCallback(event) {
+      var content = event.data;
+      var className = event.from.connectionId === session.connection.connectionId ? 'self' : 'others';
+      updateChat(content, className);
+    });
+  
+    var chat = document.getElementById('chatForm');
+    var msgTxt = document.getElementById('chatInput');
+    chat.addEventListener('submit', function(event) {
+      event.preventDefault();
+      session.signal({
+        type: 'msg',
+        data: msgTxt.value
+      }, function signalCallback(error) {
+        if (error) {
+          console.error('Error sending signal:', error.name, error.message);
+        } else {
+          msgTxt.value = '';
+        }
+      })
+    }, false);
+
     document.getElementById('publishVideo').addEventListener('click', function () {
       toggleMedia(publisher, this);
     });
@@ -103,7 +142,6 @@
     document.getElementById('publishAudio').addEventListener('click', function () {
       toggleMedia(publisher, this);
     });
-
   };
 
   var init = function () {
@@ -122,5 +160,4 @@
   };
 
   document.addEventListener('DOMContentLoaded', init);
-
 }());
