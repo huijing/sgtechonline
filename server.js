@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 8080;
 app.use(express.static(`${__dirname}/public`));
-app.use(bodyParser.json());
+app.use(express.json());
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'ejs');
 
@@ -40,7 +40,11 @@ app.get('/broadcast', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.redirect('/viewer');
+  res.redirect('/');
+});
+
+app.post('/register', (req, res) => {
+  console.log(req.body)
 });
 
 app.post('/broadcast/start', (req, res) => {

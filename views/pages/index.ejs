@@ -22,28 +22,29 @@
     }
   </style>
 
+  <script src="js/util/http.js"></script>
   <script src="js/index.js" type="text/javascript"></script>
 </head>
 
 <body>
   <main>
     <%- include ('../partials/branding') %>
-    <form id="registration">
+    <form id="registration" >
       <label>
         <span>Name</span>
-        <input name="user-name" placeholder="Enter display name">
+        <input name="user-name" placeholder="Enter display name" required>
       </label>
       <fieldset>
         <label>
-          <input type="radio" name="user-type">
+          <input type="radio" name="user-type" value="host">
           <span>Host</span>
         </label>
         <label>
-          <input type="radio" name="user-type">
+          <input type="radio" name="user-type" value="guest">
           <span>Guest</span>
         </label>
         <label>
-          <input type="radio" name="user-type" checked>
+          <input type="radio" name="user-type" value="viewer" checked>
           <span>Viewer</span>
         </label>
       </fieldset>
