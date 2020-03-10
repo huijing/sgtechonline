@@ -27,8 +27,9 @@
    * Create an OpenTok publisher object
    */
   const initPublisher = function () {
+    let query = new URLSearchParams(window.location.search)
     const properties = Object.assign({
-      name: 'Host',
+      name: query.get('name'),
       style: { nameDisplayMode: "on" },
       insertMode: 'before'
     }, insertOptions);
@@ -72,7 +73,7 @@
    */
   const updateStatus = function (session, status) {
     const startStopButton = document.getElementById('startStop');
-    const playerUrl = getBroadcastUrl((({ url, availableAt }) => ({ url, availableAt }))(broadcast));
+    const playerUrl = getBroadcastUrl({url: broadcast.url, availableAt: broadcast.availableAt});
     const displayUrl = document.getElementById('broadcastURL');
     const rtmpActive = document.getElementById('rtmpActive');
 
@@ -182,7 +183,7 @@
    */
   const subscribe = function (session, stream) {
     const properties = Object.assign({
-      name: 'Guest',
+      name: stream.name,
       insertMode: 'after'
     }, insertOptions);
     session.subscribe(stream, 'hostDivider', properties, function (error) {

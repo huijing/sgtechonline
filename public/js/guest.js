@@ -26,8 +26,9 @@
 
 
   var initPublisher = function initPublisher() {
+    var query = new URLSearchParams(window.location.search);
     var properties = Object.assign({
-      name: 'Guest',
+      name: query.get('name'),
       insertMode: 'after'
     }, insertOptions);
     return OT.initPublisher('hostDivider', properties);
@@ -39,7 +40,7 @@
 
   var subscribe = function subscribe(session, stream) {
     var name = stream.name;
-    var insertMode = name === 'Host' ? 'before' : 'after';
+    var insertMode = name === 'host' ? 'before' : 'after';
     var properties = Object.assign({
       name: name,
       insertMode: insertMode

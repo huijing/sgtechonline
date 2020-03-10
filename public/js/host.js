@@ -39,8 +39,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
   var initPublisher = function initPublisher() {
+    var query = new URLSearchParams(window.location.search);
     var properties = Object.assign({
-      name: 'Host',
+      name: query.get('name'),
       style: {
         nameDisplayMode: "on"
       },
@@ -95,14 +96,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   var updateStatus = function updateStatus(session, status) {
     var startStopButton = document.getElementById('startStop');
-    var playerUrl = getBroadcastUrl(function (_ref) {
-      var url = _ref.url,
-          availableAt = _ref.availableAt;
-      return {
-        url: url,
-        availableAt: availableAt
-      };
-    }(broadcast));
+    var playerUrl = getBroadcastUrl({
+      url: broadcast.url,
+      availableAt: broadcast.availableAt
+    });
     var displayUrl = document.getElementById('broadcastURL');
     var rtmpActive = document.getElementById('rtmpActive');
     broadcast.status = status;
@@ -219,7 +216,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   var subscribe = function subscribe(session, stream) {
     var properties = Object.assign({
-      name: 'Guest',
+      name: stream.name,
       insertMode: 'after'
     }, insertOptions);
     session.subscribe(stream, 'hostDivider', properties, function (error) {

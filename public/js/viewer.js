@@ -1,7 +1,5 @@
 "use strict";
 
-function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
-
 (function () {
   /**
    * Options for adding OpenTok publisher and subscriber video elements
@@ -29,6 +27,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
 
 
   var subscribe = function subscribe(session, stream) {
+    console.log(stream);
     var name = stream.name;
     var insertMode = name === 'Host' ? 'before' : 'after';
     var properties = Object.assign({
@@ -119,7 +118,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
 
     session.on('signal:broadcast', function (event) {
       var status = event.data;
-      broadcastActive = (_readOnlyError("broadcastActive"), status === 'active');
+      broadcastActive = status === 'active';
 
       if (status === 'active') {
         streams.forEach(function (stream) {

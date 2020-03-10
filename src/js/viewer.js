@@ -24,6 +24,7 @@
    * @returns {Object} A subscriber object
    */
   const subscribe = function (session, stream) {
+    console.log(stream);
     const name = stream.name;
     const insertMode = name === 'Host' ? 'before' : 'after';
     const properties = Object.assign({
@@ -83,9 +84,9 @@
    * Listen for events on the OpenTok session
    */
   const setEventListeners = function (session, db) {
-    const streams = [];
-    const subscribers = [];
-    const broadcastActive = false;
+    let streams = [];
+    let subscribers = [];
+    let broadcastActive = false;
 
     /** Subscribe to new streams as they are published */
     session.on('streamCreated', function (event) {

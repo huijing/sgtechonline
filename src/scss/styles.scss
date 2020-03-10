@@ -142,6 +142,10 @@ button {
   border-radius: 20px;
 }
 
+.OT_publisher .OT_edge-bar-item.OT_mode-off, .OT_subscriber .OT_edge-bar-item.OT_mode-off {
+  display: inline-block;
+}
+
 .OT_widget-container .OT_video-element {
   border-radius: 8px;
 }
