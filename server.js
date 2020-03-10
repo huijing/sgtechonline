@@ -12,7 +12,7 @@ const opentok = require('./services/opentok-api');
 const broadcast = require('./services/broadcast-api');
 
 app.get('/', (req, res) => {
-  res.redirect('/viewer');
+  res.render('pages/index')
 });
 
 app.get('/viewer', (req, res) => {

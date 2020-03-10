@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SGTech Goes Online</title>
+  <meta name="description" content="Customisable OpenTok broadcast application for Singapore's online meetups">
+  <meta name="author" content="Chen Hui Jing">
+
+  <style>
+    body {
+      display: flex;
+      height: 100vh;
+    }
+
+    main{
+      margin: auto;
+      text-align: center;
+    }
+  </style>
+
+  <script src="js/index.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <main>
+    <%- include ('../partials/branding') %>
+    <form id="registration">
+      <label>
+        <span>Name</span>
+        <input name="user-name" placeholder="Enter display name">
+      </label>
+      <fieldset>
+        <label>
+          <input type="radio" name="user-type">
+          <span>Host</span>
+        </label>
+        <label>
+          <input type="radio" name="user-type">
+          <span>Guest</span>
+        </label>
+        <label>
+          <input type="radio" name="user-type" checked>
+          <span>Viewer</span>
+        </label>
+      </fieldset>
+      <button>Start</button>
+    </form>
+  </main>
+  
+</body>
+
+</html>
