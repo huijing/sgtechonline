@@ -6,8 +6,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
-
 (function () {
   /** The state of things */
   var broadcast = {
@@ -195,7 +193,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
       streams: broadcast.streams,
       rtmp: rtmp
     }).then(function (broadcastData) {
-      broadcast = (_readOnlyError("broadcast"), _objectSpread({}, broadcast, {}, broadcastData));
+      broadcast = _objectSpread({}, broadcast, {}, broadcastData);
       updateStatus(session, 'active');
     })["catch"](function (error) {
       console.log(error);

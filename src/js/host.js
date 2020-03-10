@@ -1,7 +1,7 @@
 (function () {
 
   /** The state of things */
-  const broadcast = { status: 'waiting', streams: 1, rtmp: false };
+  let broadcast = { status: 'waiting', streams: 1, rtmp: false };
 
   /**
    * Options for adding OpenTok publisher and subscriber video elements
