@@ -43,7 +43,7 @@ const createSession = options =>
     };
 
     options = (typeof options === 'undefined') ? defaultSessionOptions : options;
-    
+
     OT.createSessionAsync(options)
       .then(setActiveSession)
       .then(resolve)
@@ -53,9 +53,14 @@ const createSession = options =>
 /**
  * Create an OpenTok token
  * @param {String} userType Host, guest, or viewer
+ * @param [String] name Name to display in chat
  * @returns {String}
  */
-const createToken = userType => OT.generateToken(activeSession.sessionId, tokenOptions(userType));
+const createToken = (userType, name) => {
+  let options = tokenOptions(userType)
+  options.data = `username=${name}`
+  return OT.generateToken(activeSession.sessionId, options)
+};
 
 /** Exports */
 
@@ -63,15 +68,15 @@ const createToken = userType => OT.generateToken(activeSession.sessionId, tokenO
  * Creates an OpenTok session and generates an associated token
  * @returns {Promise} <Resolve => {Object}, Reject => {Error}>
  */
-const getCredentials = userType =>
+const getCredentials = (userType, name) =>
   new Promise((resolve, reject) => {
     if (activeSession) {
-      const token = createToken(userType);
+      const token = createToken(userType, name);
       resolve({ apiKey, sessionId: activeSession.sessionId, token });
     } else {
 
       const addToken = session => {
-        const token = createToken(userType);
+        const token = createToken(userType, name);
         return Promise.resolve({ apiKey, sessionId: session.sessionId, token });
       };
 

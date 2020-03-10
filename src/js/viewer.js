@@ -26,9 +26,9 @@
   const subscribe = function (session, stream) {
     const name = stream.name;
     const insertMode = name === 'Host' ? 'before' : 'after';
-    const properties = Object.assign({ 
+    const properties = Object.assign({
       name: name,
-      insertMode: insertMode 
+      insertMode: insertMode
     }, insertOptions);
     return session.subscribe(stream, 'hostDivider', properties, function (error) {
       if (error) {
@@ -76,7 +76,7 @@
     db.info().then(function (info) {
       console.log(info);
     })
-    
+
   }
 
   /**
@@ -138,7 +138,7 @@
       event.preventDefault();
       session.signal({
         type: 'msg',
-        data: msgTxt.value
+        data: `${session.connection.data.split('=')[1]}: ${msgTxt.value}`
       }, function signalCallback(error) {
         if (error) {
           console.error('Error sending signal:', error.name, error.message);
@@ -159,6 +159,7 @@
       if (error) {
         console.log(error);
       } else {
+        console.log(session.connection);
         setEventListeners(session, db);
         checkBroadcastStatus(session);
       }

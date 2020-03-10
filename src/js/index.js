@@ -19,12 +19,8 @@
     const handleFormSubmit = event => {
       event.preventDefault();
 
-      http.post('/register', formToJSON(userForm.elements))
-      .then(function (test) {
-        console.log(test)
-      }).catch(function (error) {
-        console.log(error);
-      });
+      const formBody = formToJSON(userForm.elements);
+      location.assign(`/${formBody['user-type']}?name=${formBody['user-name']}`)
     };
     userForm.addEventListener('submit', handleFormSubmit, false);
   };
