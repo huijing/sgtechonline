@@ -324,7 +324,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
       event.preventDefault();
       session.signal({
         type: 'msg',
-        data: msgTxt.value
+        data: "".concat(session.connection.data.split('=')[1], ": ").concat(msgTxt.value)
       }, function signalCallback(error) {
         if (error) {
           console.error('Error sending signal:', error.name, error.message);

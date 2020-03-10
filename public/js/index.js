@@ -24,11 +24,8 @@
 
     var handleFormSubmit = function handleFormSubmit(event) {
       event.preventDefault();
-      http.post('/register', formToJSON(userForm.elements)).then(function (test) {
-        console.log(test);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      var formBody = formToJSON(userForm.elements);
+      location.assign("/".concat(formBody['user-type'], "?name=").concat(formBody['user-name']));
     };
 
     userForm.addEventListener('submit', handleFormSubmit, false);

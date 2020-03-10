@@ -27,7 +27,7 @@
    * Create an OpenTok publisher object
    */
   const initPublisher = function () {
-    const properties = Object.assign({ 
+    const properties = Object.assign({
       name: 'Host',
       style: { nameDisplayMode: "on" },
       insertMode: 'before'
@@ -181,7 +181,7 @@
    * Subscribe to a stream
    */
   const subscribe = function (session, stream) {
-    const properties = Object.assign({ 
+    const properties = Object.assign({
       name: 'Guest',
       insertMode: 'after'
     }, insertOptions);
@@ -270,14 +270,14 @@
       const className = event.from.connectionId === session.connection.connectionId ? 'self' : 'others';
       updateChat(content, className);
     });
-  
+
     const chat = document.getElementById('chatForm');
     const msgTxt = document.getElementById('chatInput');
     chat.addEventListener('submit', function(event) {
       event.preventDefault();
       session.signal({
         type: 'msg',
-        data: msgTxt.value
+        data: `${session.connection.data.split('=')[1]}: ${msgTxt.value}`
       }, function signalCallback(error) {
         if (error) {
           console.error('Error sending signal:', error.name, error.message);

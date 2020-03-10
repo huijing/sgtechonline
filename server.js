@@ -16,19 +16,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/viewer', (req, res) => {
-  opentok.getCredentials('viewer')
+  opentok.getCredentials('viewer', req.query.name)
     .then(credentials => res.render('pages/viewer', { credentials: JSON.stringify(credentials) }))
     .catch(error => res.status(500).send(error));
 });
 
 app.get('/host', (req, res) => {
-  opentok.getCredentials('host')
+  opentok.getCredentials('host', req.query.name)
     .then(credentials => res.render('pages/host', { credentials: JSON.stringify(credentials) }))
     .catch(error => res.status(500).send(error));
 });
 
 app.get('/guest', (req, res) => {
-  opentok.getCredentials('guest')
+  opentok.getCredentials('guest', req.query.name)
     .then(credentials => res.render('pages/guest', { credentials: JSON.stringify(credentials) }))
     .catch(error => res.status(500).send(error));
 });
@@ -41,10 +41,6 @@ app.get('/broadcast', (req, res) => {
 
 app.get('*', (req, res) => {
   res.redirect('/');
-});
-
-app.post('/register', (req, res) => {
-  console.log(req.body)
 });
 
 app.post('/broadcast/start', (req, res) => {
@@ -70,4 +66,3 @@ app.post('/broadcast/end', (req, res) => {
 });
 
 app.listen(process.env.PORT || port, () => console.log(`app listening on port ${port}`));
-
