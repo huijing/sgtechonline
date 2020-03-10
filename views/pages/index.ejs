@@ -11,6 +11,11 @@
   <meta name="author" content="Chen Hui Jing">
 
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       display: flex;
       height: 100vh;
@@ -19,6 +24,39 @@
     main{
       margin: auto;
       text-align: center;
+    }
+
+    header {
+      margin-bottom: 1em;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 1em;
+    }
+
+    fieldset {
+      border: 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    input {
+      font-size: 85%;
+      padding: 0.5em;
+      border: 1px solid mediumslateblue;
+      border-radius: 2px;
+    }
+
+    button {
+      background-color: mediumslateblue;
+      color: white;
+      cursor: pointer;
+      border: 0;
+      border-radius: 2px;
+      transition: color .3s ease, mediumslateblue .3s ease;
+      font-size: inherit;
+      padding: 0.5em 1em;
     }
   </style>
 
@@ -34,6 +72,7 @@
         <span>Name</span>
         <input name="user-name" placeholder="Enter display name" required>
       </label>
+      <p>Select your role:</p>
       <fieldset>
         <label>
           <input type="radio" name="user-type" value="host">
