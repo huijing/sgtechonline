@@ -6,7 +6,7 @@
    */
   var insertOptions = {
     width: '100%',
-    height: '100%',
+    height: '25%',
     showControls: false
   };
   /**

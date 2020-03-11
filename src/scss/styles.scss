@@ -97,7 +97,6 @@ button {
 .video-container.wrap {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
 }
 
 .video-container:empty {
@@ -125,8 +124,13 @@ button {
 
 .video-container.wrap .OT_publisher,
 .video-container.wrap .OT_subscriber {
-  height: 49.5% !important;
-  width: 48.5% !important;
+  flex: 1 1 0;
+}
+
+.video-container.wrap .OT_publisher.focused,
+.video-container.wrap .OT_subscriber.focused {
+  flex: 1 0 100% !important;
+  height: 75% !important;
 }
 
 .OT_publisher .OT_name.OT_edge-bar-item.OT_mode-off,
