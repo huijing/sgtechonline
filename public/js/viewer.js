@@ -77,6 +77,10 @@
     msg.textContent = content;
     msg.className = className;
     msgHistory.appendChild(msg);
+    msgHistory.scroll({
+      top: msgHistory.scrollHeight,
+      behavior: 'smooth'
+    });
   };
 
   var trackChat = function trackChat(content, db) {

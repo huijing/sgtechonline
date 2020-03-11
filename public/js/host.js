@@ -259,6 +259,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     msg.textContent = content;
     msg.className = className;
     msgHistory.appendChild(msg);
+    msgHistory.scroll({
+      top: msgHistory.scrollHeight,
+      behavior: 'smooth'
+    });
   };
 
   var setEventListeners = function setEventListeners(session, publisher) {

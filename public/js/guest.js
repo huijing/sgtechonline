@@ -83,6 +83,10 @@
     msg.textContent = content;
     msg.className = className;
     msgHistory.appendChild(msg);
+    msgHistory.scroll({
+      top: msgHistory.scrollHeight,
+      behavior: 'smooth'
+    });
   };
   /**
    * Start publishing our audio and video to the session. Also, start
