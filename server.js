@@ -11,6 +11,8 @@ app.set('view engine', 'ejs');
 const opentok = require('./services/opentok-api');
 const broadcast = require('./services/broadcast-api');
 
+let layoutz = [2, 1, 3, 4]
+
 app.get('/', (req, res) => {
   res.render('pages/index')
 });
@@ -28,7 +30,7 @@ app.get('/host', (req, res) => {
 });
 
 app.get('/guest', (req, res) => {
-  opentok.getCredentials('guest', req.query.name)
+  opentok.getCredentials('guest', req.query.name, true)
     .then(credentials => res.render('pages/guest', { credentials: JSON.stringify(credentials) }))
     .catch(error => res.status(500).send(error));
 });
@@ -47,10 +49,19 @@ app.post('/broadcast/start', (req, res) => {
   const sessionId = req.body.sessionId;
   const streams = req.body.streams;
   const rtmp = req.body.rtmp;
-  broadcast.start(sessionId, streams, rtmp)
+  broadcast.start(sessionId, streams, rtmp, {layout: {type: 'horizontalPresentation'}})
     .then(data => res.send(data))
     .catch(error => res.status(500).send(error));
 });
+
+app.get('/layout', (req, res) => {
+  res.send({layout: layoutz})
+})
+
+app.post('/layout', (req, res) => {
+  layoutz = req.body.layout
+  res.send({layout: layoutz})
+})
 
 app.post('/broadcast/layout', (req, res) => {
   const streams = req.body.streams;

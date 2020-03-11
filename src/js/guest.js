@@ -24,8 +24,9 @@
    * Create an OpenTok publisher object
    */
   const initPublisher = function () {
+    let query = new URLSearchParams(window.location.search)
     const properties = Object.assign({
-      name: 'Guest',
+      name: query.get('name'),
       insertMode: 'after'
     }, insertOptions);
     return OT.initPublisher('hostDivider', properties);
@@ -36,7 +37,7 @@
    */
   const subscribe = function (session, stream) {
     const name = stream.name;
-    const insertMode = name === 'Host' ? 'before' : 'after';
+    const insertMode = name === 'host' ? 'before' : 'after';
     const properties = Object.assign({
       name: name,
       insertMode: insertMode

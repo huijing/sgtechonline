@@ -74,13 +74,13 @@ const headers = () => {
  * @param {String} [rtmpUrl] - The (optional) RTMP stream url
  * @returns {Promise} <Resolve => {Object} Broadcast data, Reject => {Error}>
  */
-const start = (broadcastSessionId, streams, rtmp) =>
+const start = (broadcastSessionId, streams, rtmp, layout) =>
   new Promise((resolve, reject) => {
     if (activeBroadcast.session === broadcastSessionId) {
       resolve(activeBroadcast);
     } else {
-      const layout = streams > 3 ? bestFitLayout : horizontalLayout;
-
+      layout = layout || (streams > 3 ? bestFitLayout : horizontalLayout);
+      console.log(layout);
       /**
        * This outputs property must be included in the request body
        * in order to broadcast to RTMP streams
@@ -108,6 +108,8 @@ const start = (broadcastSessionId, streams, rtmp) =>
           availableAt: body.createdAt + broadcastDelay
         };
         activeBroadcast = broadcastData;
+        console.log(requestConfig, body, broadcastData);
+
         return Promise.resolve(broadcastData);
       };
 

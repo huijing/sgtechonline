@@ -56,9 +56,12 @@ const createSession = options =>
  * @param [String] name Name to display in chat
  * @returns {String}
  */
-const createToken = (userType, name) => {
+const createToken = (userType, name, isFocused) => {
   let options = tokenOptions(userType)
   options.data = `username=${name}`
+  if (isFocused) {
+    options.initialLayoutClassList = ['focus']
+  }
   return OT.generateToken(activeSession.sessionId, options)
 };
 
@@ -68,10 +71,11 @@ const createToken = (userType, name) => {
  * Creates an OpenTok session and generates an associated token
  * @returns {Promise} <Resolve => {Object}, Reject => {Error}>
  */
-const getCredentials = (userType, name) =>
+const getCredentials = (userType, name, isFocused) =>
   new Promise((resolve, reject) => {
+    isFocused = !!isFocused;
     if (activeSession) {
-      const token = createToken(userType, name);
+      const token = createToken(userType, name, isFocused);
       resolve({ apiKey, sessionId: activeSession.sessionId, token });
     } else {
 
