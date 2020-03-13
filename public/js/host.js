@@ -19,7 +19,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   var insertOptions = {
     width: '100%',
-    height: '25%',
+    height: '100%',
     showControls: false
   };
   /**

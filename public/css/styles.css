@@ -99,7 +99,11 @@ button {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap; }
+      flex-wrap: wrap;
+  position: relative;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end; }
 
 .video-container:empty {
   width: 0; }
@@ -129,14 +133,18 @@ button {
 .video-container.wrap .OT_subscriber {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 0px;
-          flex: 1 1 0; }
+          flex: 1 1 0;
+  height: 25% !important; }
 
 .video-container.wrap .OT_publisher.focused,
 .video-container.wrap .OT_subscriber.focused {
   -webkit-box-flex: 1 !important;
       -ms-flex: 1 0 100% !important;
           flex: 1 0 100% !important;
-  height: 75% !important; }
+  height: 75% !important;
+  position: absolute;
+  -ms-flex-item-align: start;
+      align-self: start; }
 
 .OT_publisher .OT_name.OT_edge-bar-item.OT_mode-off,
 .OT_subscriber .OT_name.OT_edge-bar-item.OT_mode-off {

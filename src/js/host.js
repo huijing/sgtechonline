@@ -8,7 +8,7 @@
    */
   const insertOptions = {
     width: '100%',
-    height: '25%',
+    height: '100%',
     showControls: false
   };
 
