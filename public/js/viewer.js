@@ -67,6 +67,61 @@
     }
   };
   /**
+   * Load previous chat history, if available
+   */
+
+
+  var initChat = function initChat(db, status) {
+    if (status === 'active') {
+      document.getElementById('chatForm').classList.remove('disabled');
+      document.getElementById('chatInput').removeAttribute('disabled');
+      db.allDocs({
+        include_docs: true,
+        attachments: true
+      }).then(function (result) {
+        var messagesArray = result.rows;
+        var msgHistory = document.getElementById('chatHistory');
+        messagesArray.forEach(function (message) {
+          var msg = document.createElement('p');
+          msg.textContent = message.doc.content;
+          msg.className = message.doc.className;
+          msgHistory.appendChild(msg);
+        });
+        msgHistory.scroll({
+          top: msgHistory.scrollHeight,
+          behavior: 'smooth'
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    } else if (status === 'ended') {
+      document.getElementById('chatForm').classList.add('disabled');
+      document.getElementById('chatInput').setAttribute('disabled');
+      db.destroy().then(function (response) {
+        console.log(response);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  };
+
+  var trackChat = function trackChat(content, className, db) {
+    var message = {
+      '_id': Date.now().toString(),
+      'content': content,
+      'className': className
+    };
+    db.put(message).then(function () {
+      return db.allDocs({
+        include_docs: true
+      });
+    }).then(function (response) {
+      console.log(response);
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  };
+  /**
    * Receive a message and append it to the message history
    */
 
@@ -80,12 +135,6 @@
     msgHistory.scroll({
       top: msgHistory.scrollHeight,
       behavior: 'smooth'
-    });
-  };
-
-  var trackChat = function trackChat(content, db) {
-    db.info().then(function (info) {
-      console.log(info);
     });
   };
   /**
@@ -134,31 +183,34 @@
         });
       }
 
+      initChat(db, status);
       updateBanner(status);
     });
     /** Listen for msg type signal events and update chat log display */
 
     session.on('signal:msg', function signalCallback(event) {
-      console.log(event);
       var content = event.data;
       var className = event.from.connectionId === session.connection.connectionId ? 'self' : 'others';
       updateChat(content, className);
-      trackChat(content, db);
+      trackChat(content, className, db);
     });
     var chat = document.getElementById('chatForm');
     var msgTxt = document.getElementById('chatInput');
     chat.addEventListener('submit', function (event) {
       event.preventDefault();
-      session.signal({
-        type: 'msg',
-        data: "".concat(session.connection.data.split('=')[1], ": ").concat(msgTxt.value)
-      }, function signalCallback(error) {
-        if (error) {
-          console.error('Error sending signal:', error.name, error.message);
-        } else {
-          msgTxt.value = '';
-        }
-      });
+
+      if (broadcastActive) {
+        session.signal({
+          type: 'msg',
+          data: "".concat(session.connection.data.split('=')[1], ": ").concat(msgTxt.value)
+        }, function signalCallback(error) {
+          if (error) {
+            console.error('Error sending signal:', error.name, error.message);
+          } else {
+            msgTxt.value = '';
+          }
+        });
+      }
     }, false);
   };
 

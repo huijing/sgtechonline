@@ -78,16 +78,15 @@ const getCredentials = (userType, name, isFocused) =>
       const token = createToken(userType, name, isFocused);
       resolve({ apiKey, sessionId: activeSession.sessionId, token });
     } else {
+    const addToken = session => {
+      const token = createToken(userType, name);
+      return Promise.resolve({ apiKey, sessionId: session.sessionId, token });
+    };
 
-      const addToken = session => {
-        const token = createToken(userType, name);
-        return Promise.resolve({ apiKey, sessionId: session.sessionId, token });
-      };
-
-      createSession()
-        .then(addToken)
-        .then(resolve)
-        .catch(reject);
+    createSession()
+      .then(addToken)
+      .then(resolve)
+      .catch(reject);
     }
   });
 

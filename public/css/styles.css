@@ -103,7 +103,7 @@ button {
   position: relative;
   -webkit-box-align: end;
       -ms-flex-align: end;
-          align-items: end; }
+          align-items: flex-end; }
 
 .video-container:empty {
   width: 0; }
@@ -138,9 +138,6 @@ button {
 
 .video-container.wrap .OT_publisher.focused,
 .video-container.wrap .OT_subscriber.focused {
-  -webkit-box-flex: 1 !important;
-      -ms-flex: 1 0 100% !important;
-          flex: 1 0 100% !important;
   height: 75% !important;
   position: absolute;
   -ms-flex-item-align: start;
@@ -315,3 +312,7 @@ button {
 
 .chat-container button {
   border-radius: 0 2px 2px 0; }
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.4; }

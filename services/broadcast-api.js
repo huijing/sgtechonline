@@ -108,7 +108,7 @@ const start = (broadcastSessionId, streams, rtmp, layout) =>
           availableAt: body.createdAt + broadcastDelay
         };
         activeBroadcast = broadcastData;
-        console.log(requestConfig, body, broadcastData);
+        console.log(broadcastData);
 
         return Promise.resolve(broadcastData);
       };
@@ -117,7 +117,6 @@ const start = (broadcastSessionId, streams, rtmp, layout) =>
         .then(setActiveBroadcast)
         .then(resolve)
         .catch(reject);
-
     }
   });
 
