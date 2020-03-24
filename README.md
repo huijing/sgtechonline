@@ -4,6 +4,9 @@ A side-project attempting to build a customisable broadcasting application for s
 
 Anyway, this is largely because of COVID-19. It is possible that you're here after this whole thing has blown over, or gotten so bad that the world has ended, or something in between.
 
+*Update: 24 March 2020*  
+There's probably going to be a major rewrite soon, because the original code this project was based off has numerous implementations I don't agree with.
+
 ## OpenTok, the technology behind the app
 
 The OpenTok live streaming feature lets you broadcast an OpenTok session to an HTTP live streaming (HLS) stream. More clients can simultaneously view this stream than can view a live interactive OpenTok session. Also, clients that do not support WebRTC (such as Safari) can view the HLS stream.
