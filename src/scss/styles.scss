@@ -97,8 +97,7 @@ button {
 .video-container.wrap {
   display: flex;
   flex-wrap: wrap;
-  position: relative;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .video-container:empty {
@@ -119,11 +118,6 @@ button {
   display: none;
 }
 
-.video-container .OT_publisher,
-.video-container .OT_subscriber {
-  position: relative;
-}
-
 .video-container.wrap .OT_publisher,
 .video-container.wrap .OT_subscriber {
   flex: 1 1 0;
@@ -133,8 +127,8 @@ button {
 .video-container.wrap .OT_publisher.focused,
 .video-container.wrap .OT_subscriber.focused {
   height: 75% !important;
-  position: absolute;
-  align-self: start;
+  order: -1;
+  flex: 1 0 100%;
 }
 
 .OT_publisher .OT_name.OT_edge-bar-item.OT_mode-off,
