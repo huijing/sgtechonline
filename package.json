@@ -7,7 +7,7 @@
     "bent": "^7.1.1",
     "bluebird": "^3.7.2",
     "deepmerge": "^4.2.2",
-    "ejs": "^3.0.1",
+    "ejs": "^3.1.7",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "opentok": "^2.9.2",
